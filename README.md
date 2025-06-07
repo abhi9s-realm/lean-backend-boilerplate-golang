@@ -54,31 +54,42 @@ lean-backend-boilerplate-golang/
 
 
 🚀 Quick Start
-Prerequisites
 
-Go 1.21+
-PostgreSQL (or use Docker)
+### Prerequisites
 
-Setup (< 5 minutes)
-# 1. Clone
+| Requirement | Version |
+|-------------|---------|
+| Go | 1.21+ |
+| PostgreSQL | 14+ (or Docker) |
+
+### Setup (< 5 minutes)
+
+```bash
+# 1. Clone the repository
 git clone https://github.com/your-username/lean-backend-boilerplate-golang.git
 cd lean-backend-boilerplate-golang
 
-# 2. Install Dependencies
-go mod tidy
+# 2. Install dependencies
+go mod download && go mod verify
 
-# 3. Configure Environment
-# Base .env file is included with documentation
-# Create environment-specific files as needed:
-cp .env .env.dev    # Development settings
-cp .env .env.test   # Test settings
-cp .env .env.prod   # Production settings
+# 3. Configure environment
+# Choose your preferred setup method:
 
-# 4. Run
-make run           # Development mode (default)
-# or
+# Option A: Direct setup
+cp .env .env.dev   # Development settings
+cp .env .env.test  # Test settings
+cp .env .env.prod  # Production settings
+
+# Option B: Using Docker
+docker-compose up  # Starts API and PostgreSQL
+
+# 4. Run the application
+make run          # Development mode (default)
 make run-dev      # Explicit development mode
 make run-prod     # Production mode
+```
+
+Your API will be available at `http://localhost:8080` ✨
 
 API ready at http://localhost:8080 ✅
 
@@ -101,27 +112,14 @@ Only .env is versioned - other files are gitignored for security.
 
 📡 Default Endpoints
 
-
-
-Method
-Endpoint
-Description
-
-
-
-GET
-/api/health
-Health check
-
-
-GET
-/api/users
-List users (example)
-
-
-POST
-/api/users
-Create user (example)
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | `/api/health` | Health check |
+| GET | `/api/users` | List users with pagination |
+| POST | `/api/users` | Create new user |
+| GET | `/api/users/:id` | Get user by ID |
+| PUT | `/api/users/:id` | Update user |
+| DELETE | `/api/users/:id` | Delete user |
 
 
 Response Format:
@@ -151,24 +149,28 @@ make docker-build # Build Docker image
 🧰 What's Included
 Core Features:
 
-🚀 Gin HTTP server with middleware (Gin v1.9.1)
-🗄️ PostgreSQL with GORM (GORM v1.25.4)
-📝 Structured logging (Zap v1.26.0)
-⚙️ Multi-environment configuration (Viper v1.18.2)
-🔒 CORS handling
-📦 Standardized API responses
-🧪 Comprehensive testing setup (Testify v1.8.4)
-🐳 Docker & Docker Compose ready
+| Feature | Description |
+|---------|-------------|
+| 🚀 HTTP Server | Gin framework with middleware (v1.9.1) |
+| 🗄️ Database | PostgreSQL with GORM (v1.25.4) |
+| 📝 Logging | Structured logging with Zap (v1.26.0) |
+| ⚙️ Configuration | Multi-environment setup with Viper (v1.18.2) |
+| 🔒 Security | CORS handling and request validation |
+| 📦 API Design | Standardized responses and error handling |
+| 🧪 Testing | Comprehensive test suite with Testify (v1.8.4) |
+| 🐳 Containerization | Docker & Docker Compose ready |
 
-What's NOT Included (Add When Needed):
+Optional Features (Add When Needed):
 
-Authentication/JWT
-Rate limiting
-Redis/caching
-Database migrations
-Complex validation
-Metrics/monitoring
-Kubernetes configs
+| Feature | Implementation Suggestion |
+|---------|-------------------------|
+| 🔑 Authentication | JWT middleware in api/middleware |
+| 🚦 Rate Limiting | Redis-based rate limiter |
+| 📊 Caching | Redis cache layer |
+| 🔄 Migrations | golang-migrate for database versioning |
+| ✅ Validation | go-playground/validator |
+| 📈 Monitoring | Prometheus metrics |
+| ☸️ Kubernetes | Basic k8s manifests |
 
 
 🏗️ Architecture
