@@ -14,6 +14,7 @@ Production Ready: Proper error handling, logging, and structure from day one
 lean-backend-boilerplate-golang/
 ├── api/                      # HTTP layer
 │   ├── handlers/
+│   │   ├── user_dto.go      # User DTOs (Data Transfer Objects)
 │   │   ├── health.go        # Health check endpoint
 │   │   └── user.go          # Example user handler
 │   ├── middleware/
@@ -28,10 +29,15 @@ lean-backend-boilerplate-golang/
 │   └── config.go            # Environment configuration
 ├── internal/
 │   ├── domain/
+│   │   ├── repositories/    # Domain repository interfaces
+│   │   │   └── user_repository.go
 │   │   ├── models/
 │   │   │   └── user.go      # Example user model
-│   │   └── services/        # Business logic layer
+│   │   ├── services/        # Business logic layer (interfaces and implementations)
+│   │   │   └── user_service.go
 │   └── infrastructure/
+│   │   ├── persistence/     # Repository implementations (e.g., GORM)
+│   │   │   └── gorm_user_repository.go
 │       ├── database/
 │       │   └── postgres.go  # Database connection
 │       └── logger/
@@ -174,12 +180,14 @@ Optional Features (Add When Needed):
 
 
 🏗️ Architecture
-HTTP Request → Middleware → Handler → Service → Repository → Database
+HTTP Request → Middleware → Handler (Input Validation with DTOs) → Service → Repository → Database
 
 
-Handlers: HTTP request/response handling
-Services: Business logic
+Handlers: HTTP request/response handling, DTO validation, and calls to services.
+Services: Core business logic, orchestrates calls to repositories.
 Models: Data structures
+Repositories: Data access layer interfaces (defined in domain).
+Persistence: Concrete implementations of repository interfaces (e.g., using GORM).
 Infrastructure: External dependencies (DB, logger, etc.)
 
 
